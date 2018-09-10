@@ -12,7 +12,7 @@ function reinsert(arr, from, to) {
 
   _arr.splice(from, 1);
   _arr.splice(to, 0, val);
-  console.log("Inserting " + from + ' at ' + to);
+
   return _arr;
 }
 
