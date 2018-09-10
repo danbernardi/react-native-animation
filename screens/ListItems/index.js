@@ -4,6 +4,8 @@ import Item from './Item';
 import { range } from 'lodash';
 import styles from './styles';
 
+const colors = ['blue', 'red', 'teal', 'green', 'pink'];
+
 function reinsert(arr, from, to) {
   const _arr = arr.slice(0);
   const val = _arr[from];
@@ -22,45 +24,43 @@ class ListItems extends Component {
   constructor (props) {
     super(props);
 
-    this.items = [
-      'Item',
-      'Item',
-      'Item',
-      'Item',
-      'Item'
-    ];
+    // Generate five sequential, labeled items
+    this.items = range(5).map((el, ind) => `Item ${ind}`);
 
     this.itemHeight = 65;
 
     this.state = {
-      originalPosOfLastPressed: 0,
-      order: range(this.items.length),
+      orderOfLastPressed: 0,
+      order: range(this.items.length)
     }
 
     this.handleItemMove = this.handleItemMove.bind(this);
     this.handleItemPress = this.handleItemPress.bind(this);
   }
 
+  // When an item is clicked for movement, record its starting
+  // position and index
   handleItemPress = (posIndex) => {
     this.setState({
-      originalPosOfLastPressed: this.state.order.indexOf(posIndex)
+      orderOfLastPressed: this.state.order.indexOf(posIndex),
+      indexOfLastPressed: posIndex
     });
   };
 
   handleItemMove = (event, gestureState) => {
-    const { order, originalPosOfLastPressed } = this.state;
+    const { order, orderOfLastPressed, indexOfLastPressed } = this.state;
 
-    const mouseY = gestureState.dy + (originalPosOfLastPressed * this.itemHeight);
+    const mouseY = gestureState.dy + (orderOfLastPressed * this.itemHeight);
+
+    // Ensure that the current row found is within the number of items
     const currentRow = clamp(Math.round(mouseY / this.itemHeight), 0, this.items.length);
-    console.log('order: ' + order);
 
-    if (currentRow !== order.indexOf(originalPosOfLastPressed)) {
-      console.log('mouseY: ' + mouseY);
-      console.log('currentRow: ' + currentRow);
-      console.log('originalPostOfLastPressed: ' + originalPosOfLastPressed);
-      console.log('-------');
+    // If the item is hovering over a different slot from where it started
+    // Reshuffle the items
+    if (currentRow !== orderOfLastPressed) {
       let newOrder = order.slice();
-      newOrder = reinsert(newOrder, order.indexOf(originalPosOfLastPressed), currentRow);
+      // Calculate the new order based on where the item is now, not where it was
+      newOrder = reinsert(newOrder, order.indexOf(indexOfLastPressed), currentRow);
       this.setState({ order: newOrder });
     }
   };
@@ -83,7 +83,7 @@ class ListItems extends Component {
               itemHeight={ this.itemHeight }
               handleItemMove={ this.handleItemMove }
               handleItemPress={ this.handleItemPress }
-            ><Text>{ `${item} ${order.indexOf(index) + 1} | ${index}` }</Text></Item>
+            ><Text style={{ color: colors[index] }}>{ `${item} - Order ${order.indexOf(index)}` }</Text></Item>
           )) }
         </View>
       </View>
