@@ -38,6 +38,7 @@ class Item extends Component {
         disableScroll();
         this.state.pan.setOffset({ x: 0, y: this.state.pan.y._value });
         this.state.pan.setValue({ x: 0, y: 0 });
+
         handleItemPress(index);
 
         Animated.parallel([
@@ -45,7 +46,7 @@ class Item extends Component {
             this.state.scale,
             { toValue: 1.03, duration: 200 }
           ),
-  
+
           Animated.timing(
             this.state.zIndex,
             { toValue: 2, duration: 0 }
@@ -74,7 +75,7 @@ class Item extends Component {
             this.state.pan,
             { toValue: { x: 0, y: this.props.itemHeight * this.props.order.indexOf(this.props.index) }, friction: 7 }
           ),
-  
+
           Animated.timing(
             this.state.zIndex,
             { toValue: 1, duration: 0 }
