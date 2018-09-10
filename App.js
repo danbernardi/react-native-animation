@@ -1,22 +1,56 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import AnimationTest from './components/AnimationTest';
+import React, { Component } from 'react';
+import { createStackNavigator } from 'react-navigation';
+import { View, ScrollView, Dimensions } from 'react-native';
+import Home from './screens/Home';
+import SpringExample from './screens/SpringExample';
+import ElasticBall from './screens/ElasticBall';
+import Block3d from './screens/Block3d';
+import ListItems from './screens/ListItems';
 
-export default class App extends React.Component {
-  render() {
+class App extends Component {
+  constructor (props) {
+    super (props);
+
+    this.windowWidth = Dimensions.get('window').width;
+
+    this.routes = [
+      // Block3d,
+      ListItems,
+      Home,
+      SpringExample,
+      ElasticBall,
+    ];
+
+    this.state = {
+      scrollEnabled: true
+    };
+  }
+
+  render () {
+    const { scrollEnabled } = this.state;
+
     return (
-      <View style={styles.container}>
-        <AnimationTest />
+      <View style={ { flex: 1 } }>
+        <ScrollView
+          style={ { flex: 1, width: this.windowWidth } }
+          horizontal={ true }
+          showHorizontalScrollIndicator={ true }
+          pagingEnabled={ true }
+          decelerationRate={ 'fast' }
+          scrollEnabled={ scrollEnabled }
+        >
+          { this.routes.map((component, index) => (
+            React.createElement(component, {
+              key: index,
+              enableScroll: () => this.setState({ scrollEnabled: true }),
+              disableScroll: () => this.setState({ scrollEnabled: false }),
+              windowWidth: this.windowWidth
+            })
+          )) }
+        </ScrollView>
       </View>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
