@@ -24,7 +24,6 @@ export default StyleSheet.create({
     paddingBottom: 10,
     paddingLeft: 20,
     paddingRight: 20,
-    borderRadius: 50,
-    marginBottom: 20
+    borderRadius: 50
   }
 });

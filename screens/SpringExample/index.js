@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import { number } from 'prop-types';
-import {
-  View, Text, Animated, TouchableHighlight, Dimensions
-} from 'react-native';
-import styles from './styles';
+import { View, Text, Animated, TouchableHighlight, Dimensions } from 'react-native';
+import  styles from './styles';
+import AppWrapper from '../../containers/AppWrapper';
 
 class SpringExample extends Component {
   constructor(props) {
@@ -49,32 +47,28 @@ class SpringExample extends Component {
 
   render() {
     return (
-      <View style={ { flex: 1, width: this.props.windowWidth, backgroundColor: '#6cd4ff' } }>
-        <View style={ {
-          flex: 5, backgroundColor: '#94dfff', alignItems: 'center', justifyContent: 'center'
-        } }
-        >
-          <View style={ styles.animationContainer }>
-            { Object.keys(this.boxes).map((box, index) => (
-              <Animated.View
-                key={ index }
-                style={ { transform: [{ translateY: this.state[box] }] } }
-              >
-                <View style={ styles.box } />
-              </Animated.View>
-            )) }
+      <AppWrapper navigation={ this.props.navigation }>
+        <View style={ { flex: 1, width: this.props.windowWidth, backgroundColor: '#6cd4ff' } }>
+          <View style={ { flex: 5, backgroundColor: '#94dfff', alignItems: 'center', justifyContent: 'center' } }>
+            <View style={ styles.animationContainer }>
+              { Object.keys(this.boxes).map((box, index) => (
+                <Animated.View
+                  key={ index }
+                  style={ { transform: [{ translateY: this.state[box] }] } }
+                >
+                  <View style={ styles.box } />
+                </Animated.View>
+              )) }
+            </View>
+          </View>
+
+          <View style={ { flex: 1, alignItems: 'center', justifyContent: 'center', height: 100 } }>
+            <TouchableHighlight style={ styles.btn } onPress={ this.triggerAnimation } underlayColor="#326174">
+              <Text style={ { color: 'white', fontWeight: 'bold', fontSize: 20 } }>Trigger animation</Text>
+            </TouchableHighlight>
           </View>
         </View>
-
-        <View style={ {
-          flex: 1, alignItems: 'center', justifyContent: 'center', height: 100
-        } }
-        >
-          <TouchableHighlight style={ styles.btn } onPress={ this.triggerAnimation } underlayColor="#326174">
-            <Text style={ { color: 'white', fontWeight: 'bold', fontSize: 20 } }>Trigger animation</Text>
-          </TouchableHighlight>
-        </View>
-      </View>
+      </AppWrapper>
     );
   }
 }

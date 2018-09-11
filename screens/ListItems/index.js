@@ -73,10 +73,10 @@ class ListItems extends Component {
 
   render () {
     const { order } = this.state;
-    const { enableScroll, disableScroll } = this.props;
+    const { enableScroll, disableScroll, navigation } = this.props;
 
     return (
-      <View
+      <AppWrapper
         style={ {
           flex: 1,
           width: this.props.windowWidth,
@@ -105,7 +105,7 @@ class ListItems extends Component {
             ))
           }
         </View>
-      </View>
+      </AppWrapper>
     );
   }
 }

@@ -38,7 +38,7 @@ class Item extends Component {
 
       onPanResponderGrant: () => {
         clearTimeout(this.timeout);
-        disableScroll();
+        if (disableScroll instanceof Function) disableScroll();
         this.state.pan.setOffset({ x: 0, y: this.state.pan.y._value });
         this.state.pan.setValue({ x: 0, y: 0 });
 
@@ -65,7 +65,13 @@ class Item extends Component {
         { listener: handleItemMove },
       ),
 
+<<<<<<< HEAD
       onPanResponderRelease: () => {
+=======
+      onPanResponderRelease: (e, gestureState) => {
+        const { enableScroll } = this.props;
+
+>>>>>>> Reconfigures routing
         this.state.pan.flattenOffset();
 
         Animated.parallel([
@@ -86,7 +92,7 @@ class Item extends Component {
         ]).start(() => this.setState({ isPressed: false }));
 
         this.timeout = setTimeout(() => {
-          this.props.enableScroll();
+          if (enableScroll instanceof Function) enableScroll();
         }, 1000);
       }
     });
