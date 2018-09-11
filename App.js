@@ -6,6 +6,7 @@ import { createDrawerNavigator } from 'react-navigation';
 import SpringExample from './screens/SpringExample';
 import ElasticBall from './screens/ElasticBall';
 import ListItems from './screens/ListItems';
+<<<<<<< HEAD
 import Header from './components/Header';
 
 const routes = {
@@ -33,6 +34,9 @@ const Router = createDrawerNavigator(routes, {
   initialRouteName: 'ListItems',
   headerMode: 'none'
 });
+=======
+import ColorScape from './screens/ColorScape';
+>>>>>>> WIP
 
 class App extends Component {
   constructor(props) {
@@ -42,6 +46,7 @@ class App extends Component {
 
     this.routes = [
       // Block3d,
+      ColorScape,
       ListItems,
       Home,
       SpringExample,
