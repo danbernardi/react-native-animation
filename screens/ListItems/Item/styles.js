@@ -8,7 +8,7 @@ export default StyleSheet.create({
     paddingRight: 20,
     backgroundColor: '#FFFFFF',
     marginBottom: 10,
-    shadowOffset:{  width: 0,  height: 3,  },
+    shadowOffset: { width: 0, height: 3 },
     shadowColor: 'black',
     shadowOpacity: 0.2,
     borderRadius: 5,

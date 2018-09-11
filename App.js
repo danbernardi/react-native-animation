@@ -8,8 +8,8 @@ import Block3d from './screens/Block3d';
 import ListItems from './screens/ListItems';
 
 class App extends Component {
-  constructor (props) {
-    super (props);
+  constructor(props) {
+    super(props);
 
     this.windowWidth = Dimensions.get('window').width;
 
@@ -18,7 +18,7 @@ class App extends Component {
       ListItems,
       Home,
       SpringExample,
-      ElasticBall,
+      ElasticBall
     ];
 
     this.state = {
@@ -26,7 +26,7 @@ class App extends Component {
     };
   }
 
-  render () {
+  render() {
     const { scrollEnabled } = this.state;
 
     return (
@@ -36,7 +36,7 @@ class App extends Component {
           horizontal={ true }
           showHorizontalScrollIndicator={ true }
           pagingEnabled={ true }
-          decelerationRate={ 'fast' }
+          decelerationRate="fast"
           scrollEnabled={ scrollEnabled }
         >
           { this.routes.map((component, index) => (

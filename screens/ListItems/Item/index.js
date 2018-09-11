@@ -3,31 +3,33 @@ import { Animated, View, PanResponder } from 'react-native';
 import styles from './styles';
 
 class Item extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
 
     this.state = {
-      pan: new Animated.ValueXY({ x: 0, y: this.props.itemHeight * props.order.indexOf(props.index) }),
+      pan: new Animated.ValueXY({ x: 0, y: this.props.itemHeight * props.order }),
       scale: new Animated.Value(1),
       zIndex: new Animated.Value(1),
       isPressed: false
     };
   }
 
-  componentDidUpdate (prevProps) {
-    const { index, order, itemHeight } = this.props;
+  componentDidUpdate(prevProps) {
+    const { order, itemHeight } = this.props;
     const { isPressed } = this.state;
 
-    if (order.indexOf(index) !== prevProps.order.indexOf(index) && !isPressed) {
+    if (order !== prevProps.order && !isPressed) {
       Animated.spring(
         this.state.pan,
-        { toValue: { x: 0, y: itemHeight * order.indexOf(index) }, friction: 7 }
+        { toValue: { x: 0, y: itemHeight * order }, friction: 7 },
       ).start();
     }
   }
 
-  componentWillMount () {
-    const { order, index, handleItemMove, disableScroll, handleItemPress } = this.props;
+  componentWillMount() {
+    const {
+      order, index, handleItemMove, disableScroll, handleItemPress
+    } = this.props;
 
     this._panResponder = PanResponder.create({
       onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
@@ -44,12 +46,12 @@ class Item extends Component {
         Animated.parallel([
           Animated.timing(
             this.state.scale,
-            { toValue: 1.03, duration: 200 }
+            { toValue: 1.03, duration: 200 },
           ),
 
           Animated.timing(
             this.state.zIndex,
-            { toValue: 2, duration: 0 }
+            { toValue: 2, duration: 0 },
           )
         ]).start(() => this.setState({ isPressed: true }));
       },
@@ -59,7 +61,7 @@ class Item extends Component {
           null,
           { dx: 0, dy: this.state.pan.y }
         ],
-        { listener: handleItemMove }
+        { listener: handleItemMove },
       ),
 
       onPanResponderRelease: (e, gestureState) => {
@@ -68,17 +70,17 @@ class Item extends Component {
         Animated.parallel([
           Animated.spring(
             this.state.scale,
-            { toValue: 1, friction: 3 }
+            { toValue: 1, friction: 3 },
           ),
 
           Animated.spring(
             this.state.pan,
-            { toValue: { x: 0, y: this.props.itemHeight * this.props.order.indexOf(this.props.index) }, friction: 7 }
+            { toValue: { x: 0, y: this.props.itemHeight * this.props.order }, friction: 7 },
           ),
 
           Animated.timing(
             this.state.zIndex,
-            { toValue: 1, duration: 0 }
+            { toValue: 1, duration: 0 },
           )
         ]).start(() => this.setState({ isPressed: false }));
 
@@ -86,10 +88,10 @@ class Item extends Component {
           this.props.enableScroll();
         }, 1000);
       }
-    })
+    });
   }
 
-  render () {
+  render() {
     const { pan, scale, zIndex } = this.state;
     const rotate = '0deg';
     const [translateX, translateY] = [pan.x, pan.y];

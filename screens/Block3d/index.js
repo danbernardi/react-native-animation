@@ -1,19 +1,21 @@
 import React, { Component } from 'react';
-import { View, Animated, PanResponder, Text } from 'react-native';
+import {
+  View, Animated, PanResponder, Text
+} from 'react-native';
 import styles from './styles';
 
 class Block3d extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
 
     this.state = {
       rotate: new Animated.ValueXY({ x: 0, y: 0 })
-    }
+    };
 
     this.handlePanResponderMove = this.handlePanResponderMove.bind(this);
   }
 
-  // componentWillMount () {
+  // ComponentWillMount () {
   //   this._panResponder = PanResponder.create({
   //     onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
   //     onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
@@ -48,7 +50,7 @@ class Block3d extends Component {
   //   })
   // }
 
-  componentDidMount () {
+  componentDidMount() {
     const self = this;
 
     function animationLoop(self) {
@@ -77,28 +79,34 @@ class Block3d extends Component {
     // ).start();
   }
 
-  handlePanResponderMove (e, gestureState) {
+  handlePanResponderMove(e, gestureState) {
     const { dx, dy } = gestureState;
     const y = `${dx}deg`;
     const x = `${dy}deg`;
   }
 
-  render () {
+  render() {
     const { rotate } = this.state;
     console.log(rotate.x._value);
     console.log(rotate.y._value);
 
-    const transformStyle = { transform: [
-      { perspective: 1000 },
-      { rotateX: rotate.x.interpolate({
-        inputRange: [-360, 360],
-        outputRange: ['-360deg', '360deg']
-      }) },
-      { rotateX: rotate.y.interpolate({
-        inputRange: [-360, 360],
-        outputRange: ['-360deg', '360deg']
-      }) },
-    ] };
+    const transformStyle = {
+      transform: [
+        { perspective: 1000 },
+        {
+          rotateX: rotate.x.interpolate({
+            inputRange: [-360, 360],
+            outputRange: ['-360deg', '360deg']
+          })
+        },
+        {
+          rotateX: rotate.y.interpolate({
+            inputRange: [-360, 360],
+            outputRange: ['-360deg', '360deg']
+          })
+        }
+      ]
+    };
 
     return (
       <View style={ {
@@ -106,7 +114,8 @@ class Block3d extends Component {
         backgroundColor: '#fafafa',
         width: this.props.windowWidth,
         alignItems: 'center',
-        justifyContent: 'center' } }
+        justifyContent: 'center'
+      } }
       >
         <Animated.View style={ transformStyle }>
           <View style={ styles.blockSide1 }><Text style={ { color: '#FFFFFF' } }>Side1</Text></View>

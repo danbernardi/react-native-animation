@@ -4,7 +4,7 @@ export default StyleSheet.create({
   ball: {
     width: 60,
     height: 60,
-    // borderRadius: 30,
+    // BorderRadius: 30,
     paddingTop: 10,
     paddingRight: 10,
     paddingLeft: 10,
