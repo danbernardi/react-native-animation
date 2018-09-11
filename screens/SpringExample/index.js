@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
-import { View, Text, Animated, TouchableHighlight, Dimensions } from 'react-native';
-import  styles from './styles';
+import { number } from 'prop-types';
+import {
+  View, Text, Animated, TouchableHighlight, Dimensions
+} from 'react-native';
+import styles from './styles';
 
 class SpringExample extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
 
     this.boxCount = 30;
@@ -14,10 +17,10 @@ class SpringExample extends Component {
       this.boxes[`box${i}Position`] = new Animated.Value(Dimensions.get('window').height * -1);
     }
 
-    this.state = { ...this.boxes }
+    this.state = { ...this.boxes };
 
     this.triggerAnimation = this.triggerAnimation.bind(this);
-    
+
     this.inSpringConfig = {
       stiffness: 120,
       damping: 17,
@@ -32,22 +35,25 @@ class SpringExample extends Component {
     };
   }
 
-  triggerAnimation () {
+  triggerAnimation() {
     Animated.sequence([
-      Animated.stagger(40, Object.keys(this.boxes).reverse().map((box, index) => (
+      Animated.stagger(40, Object.keys(this.boxes).reverse().map((box) => (
         Animated.spring(this.state[box], { toValue: 0, ...this.inSpringConfig })
       ))),
 
-      Animated.stagger(25, Object.keys(this.boxes).map((box, index) => (
+      Animated.stagger(25, Object.keys(this.boxes).map((box) => (
         Animated.spring(this.state[box], { toValue: Dimensions.get('window').height * -1, ...this.outSpringConfig })
       )))
     ]).start();
   }
 
-  render () {
+  render() {
     return (
       <View style={ { flex: 1, width: this.props.windowWidth, backgroundColor: '#6cd4ff' } }>
-        <View style={ { flex: 5, backgroundColor: '#94dfff', alignItems: 'center', justifyContent: 'center' } }>
+        <View style={ {
+          flex: 5, backgroundColor: '#94dfff', alignItems: 'center', justifyContent: 'center'
+        } }
+        >
           <View style={ styles.animationContainer }>
             { Object.keys(this.boxes).map((box, index) => (
               <Animated.View
@@ -60,7 +66,10 @@ class SpringExample extends Component {
           </View>
         </View>
 
-        <View style={ { flex: 1, alignItems: 'center', justifyContent: 'center', height: 100 } }>
+        <View style={ {
+          flex: 1, alignItems: 'center', justifyContent: 'center', height: 100
+        } }
+        >
           <TouchableHighlight style={ styles.btn } onPress={ this.triggerAnimation } underlayColor="#326174">
             <Text style={ { color: 'white', fontWeight: 'bold', fontSize: 20 } }>Trigger animation</Text>
           </TouchableHighlight>
@@ -69,5 +78,9 @@ class SpringExample extends Component {
     );
   }
 }
+
+SpringExample.propTypes = {
+  windowWidth: number
+};
 
 export default SpringExample;

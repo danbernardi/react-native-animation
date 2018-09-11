@@ -9,7 +9,7 @@ const blockDimensions = {
   opacity: 0.4,
   alignItems: 'center',
   justifyContent: 'center'
-}
+};
 
 export default StyleSheet.create({
   blockFront: {
@@ -22,7 +22,7 @@ export default StyleSheet.create({
     backgroundColor: 'red',
     transform: [
       { rotateY: '0deg' },
-      { rotateX: '180deg' },
+      { rotateX: '180deg' }
     ]
   },
 
@@ -31,7 +31,7 @@ export default StyleSheet.create({
     backgroundColor: 'green',
     transform: [
       { rotateY: '0deg' },
-      { rotateX: '90deg' },
+      { rotateX: '90deg' }
     ]
   },
 
@@ -40,7 +40,7 @@ export default StyleSheet.create({
     backgroundColor: 'yellow',
     transform: [
       { rotateY: '0deg' },
-      { rotateX: '-90deg' },
+      { rotateX: '-90deg' }
     ]
   },
 
@@ -49,7 +49,7 @@ export default StyleSheet.create({
     backgroundColor: 'orange',
     transform: [
       { rotateY: '-90deg' },
-      { rotateX: '0deg' },
+      { rotateX: '0deg' }
     ]
   },
 
@@ -58,7 +58,7 @@ export default StyleSheet.create({
     backgroundColor: 'pink',
     transform: [
       { rotateY: '90deg' },
-      { rotateX: '0deg' },
+      { rotateX: '0deg' }
     ]
   }
 });
