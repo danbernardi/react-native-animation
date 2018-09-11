@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { SafeAreaView, View, ScrollView, Dimensions } from 'react-native';
+import { SafeAreaView, View, Text, Dimensions } from 'react-native';
 import Home from './screens/Home';
-import { SafeAreaView, Text, View } from 'react-native';
 import { Font } from 'expo';
-import { createDrawerNavigator, createStackNavigator } from 'react-navigation';
+import { createDrawerNavigator } from 'react-navigation';
 import SpringExample from './screens/SpringExample';
 import ElasticBall from './screens/ElasticBall';
 import ListItems from './screens/ListItems';
@@ -31,10 +30,9 @@ const routes = {
 };
 
 const Router = createDrawerNavigator(routes, {
-    initialRouteName: 'ListItems',
-    headerMode: 'none'
-  }
-);
+  initialRouteName: 'ListItems',
+  headerMode: 'none'
+});
 
 class App extends Component {
   constructor(props) {
@@ -55,7 +53,6 @@ class App extends Component {
       navigation: null
     };
   }
-
 
   async componentDidMount() {
     await Font.loadAsync({

@@ -4,12 +4,9 @@ import {
 } from 'react-native';
 import styles from './styles';
 import AppWrapper from '../../containers/AppWrapper';
+import { object } from 'prop-types';
 
 class ElasticBall extends Component {
-  static navigationOptions = {
-    title: 'Elastic Ball',
-  };
-
   constructor (props) {
     super(props);
 
@@ -88,5 +85,9 @@ class ElasticBall extends Component {
     );
   }
 }
+
+ElasticBall.propTypes = {
+  navigation: object
+};
 
 export default ElasticBall;

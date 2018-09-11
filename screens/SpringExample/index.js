@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text, Animated, TouchableHighlight, Dimensions } from 'react-native';
-import  styles from './styles';
+import styles from './styles';
 import AppWrapper from '../../containers/AppWrapper';
+import { number, object } from 'prop-types';
 
 class SpringExample extends Component {
   constructor(props) {
@@ -74,7 +75,8 @@ class SpringExample extends Component {
 }
 
 SpringExample.propTypes = {
-  windowWidth: number
+  windowWidth: number,
+  navigation: object
 };
 
 export default SpringExample;

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { number } from 'prop-types';
+import { number, object } from 'prop-types';
 import {
   View, Animated, Text
 } from 'react-native';
@@ -134,7 +134,8 @@ class Block3d extends Component {
 }
 
 Block3d.propTypes = {
-  windowWidth: number
+  windowWidth: number,
+  navigation: object
 };
 
 export default Block3d;

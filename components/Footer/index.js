@@ -3,6 +3,7 @@ import { View, Text, TouchableHighlight } from 'react-native';
 import FontAwesome, { Icons } from 'react-native-fontawesome';
 import styles from './styles';
 import { withNavigation } from 'react-navigation';
+import { object } from 'prop-types';
 
 class Footer extends Component {
   constructor(props) {
@@ -14,16 +15,15 @@ class Footer extends Component {
   nextRoute (routeIndex) {
     const { navigation } = this.props;
     const nextRoute = this.routes[routeIndex + 1];
-    
+
     navigation.navigate(nextRoute.routeName);
   }
 
   prevRoute (routeIndex) {
     const { navigation } = this.props;
     const prevRoute = this.routes[routeIndex - 1];
-    
-    navigation.navigate(prevRoute.routeName);
 
+    navigation.navigate(prevRoute.routeName);
   }
 
   render () {
@@ -54,5 +54,9 @@ class Footer extends Component {
     );
   }
 }
+
+Footer.propTypes = {
+  navigation: object
+};
 
 export default withNavigation(Footer);

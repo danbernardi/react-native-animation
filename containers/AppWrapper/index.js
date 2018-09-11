@@ -1,18 +1,23 @@
 import React, { Component } from 'react';
 import Footer from '../../components/Footer';
-import { SafeAreaView } from 'react-native';
+import { View } from 'react-native';
+import { node } from 'prop-types';
 
 class AppWrapper extends Component {
   render () {
-    const { navigation, children } = this.props;
+    const { children } = this.props;
 
     return (
-      <SafeAreaView style={ { flex: 1, backgroundColor: '#FFFFFF' } }>
+      <View style={ { flex: 1 } }>
         { children }
         <Footer />
-      </SafeAreaView>
+      </View>
     );
   }
 }
+
+AppWrapper.propTypes = {
+  children: node
+};
 
 export default AppWrapper;

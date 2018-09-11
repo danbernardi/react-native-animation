@@ -65,13 +65,7 @@ class Item extends Component {
         { listener: handleItemMove },
       ),
 
-<<<<<<< HEAD
       onPanResponderRelease: () => {
-=======
-      onPanResponderRelease: (e, gestureState) => {
-        const { enableScroll } = this.props;
-
->>>>>>> Reconfigures routing
         this.state.pan.flattenOffset();
 
         Animated.parallel([
@@ -90,10 +84,6 @@ class Item extends Component {
             { toValue: 1, duration: 0 },
           )
         ]).start(() => this.setState({ isPressed: false }));
-
-        this.timeout = setTimeout(() => {
-          if (enableScroll instanceof Function) enableScroll();
-        }, 1000);
       }
     });
   }
@@ -125,7 +115,7 @@ class Item extends Component {
         style={ transformStyle }
         { ...this._panResponder.panHandlers }
       >
-        <View style={ [styles.item, { height: this.props.itemHeight }] }>{ this.props.children }</View>
+        <View style={ [styles.item, { height: this.props.itemHeight - 5 }] }>{ this.props.children }</View>
       </Animated.View>
     );
   }

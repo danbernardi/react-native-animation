@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import FontAwesome, { Icons } from 'react-native-fontawesome';
 import { View, TouchableHighlight } from 'react-native';
+import { object } from 'prop-types';
 import styles from './styles';
 
 class Header extends Component {
@@ -24,5 +25,9 @@ class Header extends Component {
     );
   }
 }
+
+Header.propTypes = {
+  navigation: object
+};
 
 export default Header;
