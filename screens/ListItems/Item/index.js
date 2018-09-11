@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { number, func, array, node } from 'prop-types';
 import { Animated, View, PanResponder } from 'react-native';
 import styles from './styles';
 
@@ -28,14 +29,14 @@ class Item extends Component {
 
   componentWillMount() {
     const {
-      order, index, handleItemMove, disableScroll, handleItemPress
+      index, handleItemMove, disableScroll, handleItemPress
     } = this.props;
 
     this._panResponder = PanResponder.create({
-      onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
-      onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
+      onStartShouldSetPanResponderCapture: () => true,
+      onMoveShouldSetPanResponderCapture: () => true,
 
-      onPanResponderGrant: (e, gestureState) => {
+      onPanResponderGrant: () => {
         clearTimeout(this.timeout);
         disableScroll();
         this.state.pan.setOffset({ x: 0, y: this.state.pan.y._value });
@@ -64,7 +65,7 @@ class Item extends Component {
         { listener: handleItemMove },
       ),
 
-      onPanResponderRelease: (e, gestureState) => {
+      onPanResponderRelease: () => {
         this.state.pan.flattenOffset();
 
         Animated.parallel([
@@ -115,5 +116,16 @@ class Item extends Component {
     );
   }
 }
+
+Item.propTypes = {
+  index: number,
+  handleItemMove: func,
+  disableScroll: func,
+  enableScroll: func,
+  handleItemPress: func,
+  order: array,
+  itemHeight: number,
+  children: node
+};
 
 export default Item;

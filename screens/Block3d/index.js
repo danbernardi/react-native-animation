@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import { number } from 'prop-types';
 import {
-  View, Animated, PanResponder, Text
+  View, Animated, Text
 } from 'react-native';
 import styles from './styles';
 
@@ -79,16 +80,16 @@ class Block3d extends Component {
     // ).start();
   }
 
-  handlePanResponderMove(e, gestureState) {
-    const { dx, dy } = gestureState;
-    const y = `${dx}deg`;
-    const x = `${dy}deg`;
-  }
+  // handlePanResponderMove(e, gestureState) {
+  //   const { dx, dy } = gestureState;
+  //   const y = `${dx}deg`;
+  //   const x = `${dy}deg`;
+  // }
 
   render() {
     const { rotate } = this.state;
-    console.log(rotate.x._value);
-    console.log(rotate.y._value);
+    // console.log(rotate.x._value);
+    // console.log(rotate.y._value);
 
     const transformStyle = {
       transform: [
@@ -129,5 +130,9 @@ class Block3d extends Component {
     );
   }
 }
+
+Block3d.propTypes = {
+  windowWidth: number
+};
 
 export default Block3d;

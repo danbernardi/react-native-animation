@@ -1,4 +1,5 @@
 import React from 'react';
+import { number } from 'prop-types';
 import { View, Text } from 'react-native';
 import { pageMargins } from '../../styles/mixins';
 
@@ -17,5 +18,9 @@ function Home(props) {
     </View>
   );
 }
+
+Home.propTypes = {
+  windowWidth: number
+};
 
 export default Home;

@@ -1,9 +1,12 @@
 module.exports = {
-    "extends": "airbnb",
+    "extends": [
+      "standard-react",
+      "eslint:recommended"
+    ],
     "plugins": [
-        "react",
-        "jsx-a11y",
-        "import"
+      "babel",
+      "react",
+      "promise"
     ],
     "globals": {
       "__DEV__": false,
@@ -27,7 +30,9 @@ module.exports = {
       "describe" : false,
       "test" : false,
       "React": false,
-      "Map": false
+      "Map": false,
+      "setTimeout": false,
+      "clearTimeout": false
     },
     "rules": {
       "arrow-body-style": 1,

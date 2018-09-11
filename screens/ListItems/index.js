@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, PanResponder, Animated } from 'react-native';
+import { number, func } from 'prop-types';
+import { View, Text } from 'react-native';
 import { range, isEqual } from 'lodash';
 
 import Item from './Item';
@@ -36,7 +37,7 @@ class ListItems extends Component {
     this.state = {
       orderOfLastPressed: 0,
       order: range(this.items.length)
-    }
+    };
 
     this.handleItemMove = this.handleItemMove.bind(this);
     this.handleItemPress = this.handleItemPress.bind(this);
@@ -44,14 +45,14 @@ class ListItems extends Component {
 
   // When an item is clicked for movement, record its starting
   // position and index
-  handleItemPress = (posIndex) => {
+  handleItemPress (posIndex) {
     this.setState({
       orderOfLastPressed: this.state.order.indexOf(posIndex),
       indexOfLastPressed: posIndex
     });
-  };
+  }
 
-  handleItemMove = (event, gestureState) => {
+  handleItemMove (event, gestureState) {
     const { order, orderOfLastPressed, indexOfLastPressed } = this.state;
 
     const mouseY = gestureState.dy + (orderOfLastPressed * this.itemHeight);
@@ -68,14 +69,21 @@ class ListItems extends Component {
     if (!isEqual(newOrder, order)) {
       this.setState({ order: newOrder });
     }
-  };
+  }
 
   render () {
     const { order } = this.state;
     const { enableScroll, disableScroll } = this.props;
 
     return (
-      <View style={ { flex: 1, width: this.props.windowWidth, backgroundColor: '#6cd4ff', alignItems: 'center', justifyContent: 'center' } }>
+      <View
+        style={ {
+          flex: 1,
+          width: this.props.windowWidth,
+          backgroundColor: '#6cd4ff',
+          alignItems: 'center',
+          justifyContent: 'center'
+        } }>
 
         <View style={ styles.listContainer }>
           {
@@ -90,15 +98,22 @@ class ListItems extends Component {
                 handleItemMove={ this.handleItemMove }
                 handleItemPress={ this.handleItemPress }
               >
-                <Text style={{ color: colors[index] }}>
+                <Text style={ { color: colors[index] } }>
                   { `${item} - Order ${order.indexOf(index)}` }
                 </Text>
               </Item>
-          )) }
+            ))
+          }
         </View>
       </View>
     );
   }
 }
+
+ListItems.propTypes = {
+  windowWidth: number,
+  enableScroll: func,
+  disableScroll: func
+};
 
 export default ListItems;

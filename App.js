@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import { createStackNavigator } from 'react-navigation';
 import { View, ScrollView, Dimensions } from 'react-native';
 import Home from './screens/Home';
 import SpringExample from './screens/SpringExample';
 import ElasticBall from './screens/ElasticBall';
-import Block3d from './screens/Block3d';
 import ListItems from './screens/ListItems';
 
 class App extends Component {

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { number } from 'prop-types';
 import {
   View, Text, Animated, TouchableHighlight, Dimensions
 } from 'react-native';
@@ -36,11 +37,11 @@ class SpringExample extends Component {
 
   triggerAnimation() {
     Animated.sequence([
-      Animated.stagger(40, Object.keys(this.boxes).reverse().map((box, index) => (
+      Animated.stagger(40, Object.keys(this.boxes).reverse().map((box) => (
         Animated.spring(this.state[box], { toValue: 0, ...this.inSpringConfig })
       ))),
 
-      Animated.stagger(25, Object.keys(this.boxes).map((box, index) => (
+      Animated.stagger(25, Object.keys(this.boxes).map((box) => (
         Animated.spring(this.state[box], { toValue: Dimensions.get('window').height * -1, ...this.outSpringConfig })
       )))
     ]).start();
@@ -77,5 +78,9 @@ class SpringExample extends Component {
     );
   }
 }
+
+SpringExample.propTypes = {
+  windowWidth: number
+};
 
 export default SpringExample;
