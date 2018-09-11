@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { number, func, array, node } from 'prop-types';
+import { number, func, node } from 'prop-types';
 import { Animated, View, PanResponder } from 'react-native';
 import styles from './styles';
 
@@ -8,7 +8,7 @@ class Item extends Component {
     super(props);
 
     this.state = {
-      pan: new Animated.ValueXY({ x: 0, y: this.props.itemHeight * props.order }),
+      pan: new Animated.ValueXY({ x: 0, y: this.yPosition() }),
       scale: new Animated.Value(1),
       zIndex: new Animated.Value(1),
       isPressed: false
@@ -16,13 +16,13 @@ class Item extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { order, itemHeight } = this.props;
+    const { order } = this.props;
     const { isPressed } = this.state;
 
     if (order !== prevProps.order && !isPressed) {
       Animated.spring(
         this.state.pan,
-        { toValue: { x: 0, y: itemHeight * order }, friction: 7 },
+        { toValue: { x: 0, y: this.yPosition() }, friction: 7 },
       ).start();
     }
   }
@@ -76,7 +76,7 @@ class Item extends Component {
 
           Animated.spring(
             this.state.pan,
-            { toValue: { x: 0, y: this.props.itemHeight * this.props.order }, friction: 7 },
+            { toValue: { x: 0, y: this.yPosition() }, friction: 7 },
           ),
 
           Animated.timing(
@@ -92,6 +92,11 @@ class Item extends Component {
     });
   }
 
+  yPosition() {
+    const { order, itemHeight } = this.props;
+    return order * (itemHeight + 10);
+  }
+
   render() {
     const { pan, scale, zIndex } = this.state;
     const rotate = '0deg';
@@ -103,7 +108,10 @@ class Item extends Component {
         { rotate },
         { scale }
       ],
-      zIndex
+      zIndex,
+      position: 'absolute',
+      width: '100%',
+      height: this.props.itemHeight
     };
 
     return (
@@ -111,7 +119,7 @@ class Item extends Component {
         style={ transformStyle }
         { ...this._panResponder.panHandlers }
       >
-        <View style={ styles.item }>{ this.props.children }</View>
+        <View style={ [styles.item, { height: this.props.itemHeight }] }>{ this.props.children }</View>
       </Animated.View>
     );
   }
@@ -123,7 +131,7 @@ Item.propTypes = {
   disableScroll: func,
   enableScroll: func,
   handleItemPress: func,
-  order: array,
+  order: number,
   itemHeight: number,
   children: node
 };

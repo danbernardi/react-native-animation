@@ -12,9 +12,6 @@ export default StyleSheet.create({
     shadowColor: 'black',
     shadowOpacity: 0.2,
     borderRadius: 5,
-    position: 'absolute',
-    top: 0,
-    left: 0,
     width: '100%'
   }
 });

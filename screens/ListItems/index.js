@@ -85,7 +85,7 @@ class ListItems extends Component {
           justifyContent: 'center'
         } }>
 
-        <View style={ styles.listContainer }>
+        <View style={ [styles.listContainer, { height: this.items.length * this.itemHeight }] }>
           {
             this.items.map((item, index) => (
               <Item
