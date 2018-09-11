@@ -38,7 +38,7 @@ class Item extends Component {
 
       onPanResponderGrant: () => {
         clearTimeout(this.timeout);
-        disableScroll();
+        if (disableScroll instanceof Function) disableScroll();
         this.state.pan.setOffset({ x: 0, y: this.state.pan.y._value });
         this.state.pan.setValue({ x: 0, y: 0 });
 
@@ -84,10 +84,6 @@ class Item extends Component {
             { toValue: 1, duration: 0 },
           )
         ]).start(() => this.setState({ isPressed: false }));
-
-        this.timeout = setTimeout(() => {
-          this.props.enableScroll();
-        }, 1000);
       }
     });
   }
@@ -119,7 +115,7 @@ class Item extends Component {
         style={ transformStyle }
         { ...this._panResponder.panHandlers }
       >
-        <View style={ [styles.item, { height: this.props.itemHeight }] }>{ this.props.children }</View>
+        <View style={ [styles.item, { height: this.props.itemHeight - 5 }] }>{ this.props.children }</View>
       </Animated.View>
     );
   }

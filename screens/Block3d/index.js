@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { number } from 'prop-types';
+import { number, object } from 'prop-types';
 import {
   View, Animated, Text
 } from 'react-native';
 import styles from './styles';
+import AppWrapper from '../../containers/AppWrapper';
 
 class Block3d extends Component {
   constructor(props) {
@@ -110,29 +111,31 @@ class Block3d extends Component {
     };
 
     return (
-      <View style={ {
-        flex: 1,
-        backgroundColor: '#fafafa',
-        width: this.props.windowWidth,
-        alignItems: 'center',
-        justifyContent: 'center'
-      } }
-      >
-        <Animated.View style={ transformStyle }>
-          <View style={ styles.blockSide1 }><Text style={ { color: '#FFFFFF' } }>Side1</Text></View>
-          <View style={ styles.blockSide2 }><Text style={ { color: '#FFFFFF' } }>Side2</Text></View>
-          <View style={ styles.blockTop }><Text style={ { color: '#FFFFFF' } }>Top</Text></View>
-          <View style={ styles.blockBottom }><Text style={ { color: '#FFFFFF' } }>Bottom</Text></View>
-          <View style={ styles.blockBack }><Text style={ { color: '#FFFFFF' } }>Back</Text></View>
-          <View style={ styles.blockFront }><Text style={ { color: '#FFFFFF' } }>Front</Text></View>
-        </Animated.View>
-      </View>
+      <AppWrapper navigation={ this.props.navigation }>
+        <View style={ {
+          flex: 1,
+          backgroundColor: '#fafafa',
+          width: this.props.windowWidth,
+          alignItems: 'center',
+          justifyContent: 'center' } }
+        >
+          <Animated.View style={ transformStyle }>
+            <View style={ styles.blockSide1 }><Text style={ { color: '#FFFFFF' } }>Side1</Text></View>
+            <View style={ styles.blockSide2 }><Text style={ { color: '#FFFFFF' } }>Side2</Text></View>
+            <View style={ styles.blockTop }><Text style={ { color: '#FFFFFF' } }>Top</Text></View>
+            <View style={ styles.blockBottom }><Text style={ { color: '#FFFFFF' } }>Bottom</Text></View>
+            <View style={ styles.blockBack }><Text style={ { color: '#FFFFFF' } }>Back</Text></View>
+            <View style={ styles.blockFront }><Text style={ { color: '#FFFFFF' } }>Front</Text></View>
+          </Animated.View>
+        </View>
+      </AppWrapper>
     );
   }
 }
 
 Block3d.propTypes = {
-  windowWidth: number
+  windowWidth: number,
+  navigation: object
 };
 
 export default Block3d;

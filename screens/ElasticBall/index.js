@@ -3,9 +3,11 @@ import {
   View, Text, PanResponder, Animated
 } from 'react-native';
 import styles from './styles';
+import AppWrapper from '../../containers/AppWrapper';
+import { object } from 'prop-types';
 
 class ElasticBall extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props);
 
     this.state = {
@@ -21,7 +23,7 @@ class ElasticBall extends Component {
 
       onPanResponderGrant: (/* e, gestureState */) => {
         clearTimeout(this.timeout);
-        this.props.disableScroll();
+        if (this.props.disableScroll instanceof Function) this.props.disableScroll();
         this.state.pan.setOffset({ x: this.state.pan.x._value, y: this.state.pan.y._value });
         this.state.pan.setValue({ x: 0, y: 0 });
 
@@ -47,7 +49,7 @@ class ElasticBall extends Component {
         ).start();
 
         this.timeout = setTimeout(() => {
-          this.props.enableScroll();
+          if (this.props.enableScroll instanceof Function) this.props.enableScroll();
         }, 1000);
       }
     });
@@ -67,27 +69,25 @@ class ElasticBall extends Component {
     };
 
     return (
-      <View style={ { flex: 1, backgroundColor: '#fafafa', width: this.props.windowWidth } }>
-        <View style={ {
-          flex: 5, backgroundColor: '#ffffff', alignItems: 'center', justifyContent: 'center'
-        } }
-        >
-          <Text style={ {
-            fontSize: 20, color: '#bbb', fontWeight: 'bold', marginBottom: 100
-          } }
-          >
-            Drag & release the block
-          </Text>
-          <Animated.View
-            style={ transformStyle }
-            { ...this._panResponder.panHandlers }
-          >
-            <View style={ styles.ball } />
-          </Animated.View>
+      <AppWrapper navigation={ this.props.navigation }>
+        <View style={ { flex: 1, backgroundColor: '#fafafa', width: this.props.windowWidth } }>
+          <View style={ { flex: 5, backgroundColor: '#ffffff', alignItems: 'center', justifyContent: 'center' } }>
+            <Text style={ { fontSize: 20, color: '#bbb', fontWeight: 'bold', marginBottom: 100 } }>Drag & release the block</Text>
+            <Animated.View
+              style={ transformStyle }
+              { ...this._panResponder.panHandlers }
+            >
+              <View style={ styles.ball } />
+            </Animated.View>
+          </View>
         </View>
-      </View>
+      </AppWrapper>
     );
   }
 }
+
+ElasticBall.propTypes = {
+  navigation: object
+};
 
 export default ElasticBall;

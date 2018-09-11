@@ -2,8 +2,6 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   item: {
-    paddingTop: 20,
-    paddingBottom: 20,
     paddingLeft: 20,
     paddingRight: 20,
     backgroundColor: '#FFFFFF',
@@ -12,6 +10,7 @@ export default StyleSheet.create({
     shadowColor: 'black',
     shadowOpacity: 0.2,
     borderRadius: 5,
+    justifyContent: 'center',
     width: '100%'
   }
 });
