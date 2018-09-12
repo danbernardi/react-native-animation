@@ -37,7 +37,7 @@ const routes = {
 };
 
 const Router = createDrawerNavigator(routes, {
-  initialRouteName: 'ColorScape',
+  initialRouteName: 'ListItems',
   headerMode: 'none'
 });
 
@@ -82,7 +82,7 @@ class App extends Component {
         } }><Text>Loading...</Text>
         </View>
         : <SafeAreaView style={ { flex: 1, backgroundColor: '#FFFFFF' } }>
-          <Header style={{ xIndex: 4 }} navigation={ navigation } />
+          <Header navigation={ navigation } />
           <Router
             ref={ navRef => (navRef && !navigation) && this.setState({ navigation: navRef._navigation }) }
             routes={ routes }
