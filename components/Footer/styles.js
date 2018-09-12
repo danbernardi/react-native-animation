@@ -7,6 +7,7 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
     backgroundColor: '#EEEEEE',
     flexDirection: 'row',
+    zIndex: 3,
     ...pageMargins
   },
 

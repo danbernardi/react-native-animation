@@ -6,7 +6,7 @@ import { createDrawerNavigator } from 'react-navigation';
 import SpringExample from './screens/SpringExample';
 import ElasticBall from './screens/ElasticBall';
 import ListItems from './screens/ListItems';
-<<<<<<< HEAD
+import ColorScape from './screens/ColorScape';
 import Header from './components/Header';
 
 const routes = {
@@ -27,16 +27,19 @@ const routes = {
     navigationOptions: () => ({
       title: 'Elastic ball / Event example'
     })
+  },
+  ColorScape: {
+    screen: ColorScape,
+    navigationOptions: () => ({
+      title: 'Color manipulation example'
+    })
   }
 };
 
 const Router = createDrawerNavigator(routes, {
-  initialRouteName: 'ListItems',
+  initialRouteName: 'ColorScape',
   headerMode: 'none'
 });
-=======
-import ColorScape from './screens/ColorScape';
->>>>>>> WIP
 
 class App extends Component {
   constructor(props) {
@@ -79,7 +82,7 @@ class App extends Component {
         } }><Text>Loading...</Text>
         </View>
         : <SafeAreaView style={ { flex: 1, backgroundColor: '#FFFFFF' } }>
-          <Header navigation={ navigation } />
+          <Header style={{ xIndex: 4 }} navigation={ navigation } />
           <Router
             ref={ navRef => (navRef && !navigation) && this.setState({ navigation: navRef._navigation }) }
             routes={ routes }
