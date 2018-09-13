@@ -6,6 +6,7 @@ import { createDrawerNavigator } from 'react-navigation';
 import SpringExample from './screens/SpringExample';
 import ElasticBall from './screens/ElasticBall';
 import ListItems from './screens/ListItems';
+import ColorScape from './screens/ColorScape';
 import Header from './components/Header';
 
 const routes = {
@@ -26,6 +27,12 @@ const routes = {
     navigationOptions: () => ({
       title: 'Elastic ball / Event example'
     })
+  },
+  ColorScape: {
+    screen: ColorScape,
+    navigationOptions: () => ({
+      title: 'Color manipulation example'
+    })
   }
 };
 
@@ -42,6 +49,7 @@ class App extends Component {
 
     this.routes = [
       // Block3d,
+      ColorScape,
       ListItems,
       Home,
       SpringExample,

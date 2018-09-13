@@ -5,6 +5,7 @@ export default StyleSheet.create({
   header: {
     alignItems: 'flex-end',
     justifyContent: 'center',
+    zIndex: 3,
     ...pageMargins
   },
 
