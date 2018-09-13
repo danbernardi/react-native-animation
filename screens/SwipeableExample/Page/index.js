@@ -74,7 +74,6 @@ class Page extends Component {
           </View>
 
           <Animated.View
-            ref={ el => { this.animatedView = el; } }
             style={ styles.listContainer }
           >
             <Animated.View style={ { alignItems: 'center', width: '100%' } }>

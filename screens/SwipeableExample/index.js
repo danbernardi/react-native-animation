@@ -35,7 +35,7 @@ class Swipeable extends Component {
 
   scrollHandler (evt) {
     const { currentXPosition } = this.state;
-    const mouseX = evt.nativeEvent.locationX;
+    const mouseX = evt.nativeEvent.pageX;
 
     if (mouseX < 25 || mouseX > (this.windowWidth - 25)) {
       let newXPosition = currentXPosition;
