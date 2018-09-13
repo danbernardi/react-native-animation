@@ -10,7 +10,7 @@ class Item extends Component {
 
     this.state = {
       pan: new Animated.ValueXY(),
-      height: new Animated.Value(65)
+      height: new Animated.Value(75)
     };
   }
 
