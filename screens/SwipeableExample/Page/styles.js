@@ -8,6 +8,13 @@ export default StyleSheet.create({
     justifyContent: 'space-between'
   },
 
+  scrollContainer: {
+    flex: 1,
+    width: '100%',
+    paddingBottom: 40,
+    ...pageMargins
+  },
+
   item: {
     height: 55,
     paddingLeft: 20,
@@ -21,19 +28,20 @@ export default StyleSheet.create({
 
   listContainer: {
     width: '100%',
-    flex: 1
+    flex: 1,
+    marginBottom: 40
   },
 
   scrollIndicator: {
     color: 'white',
-    fontSize: 50
+    fontSize: 50,
+    marginBottom: 20
   },
 
   list: {
     flex: 1,
     height: '100%',
     paddingTop: 40,
-    paddingBottom: 40,
-    ...pageMargins
+    paddingBottom: 40
   }
 });
