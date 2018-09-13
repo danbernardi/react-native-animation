@@ -5,7 +5,8 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    backgroundColor: 'transparent'
   },
 
   scrollContainer: {
@@ -13,17 +14,6 @@ export default StyleSheet.create({
     width: '100%',
     paddingBottom: 40,
     ...pageMargins
-  },
-
-  item: {
-    height: 55,
-    paddingLeft: 20,
-    paddingRight: 20,
-    justifyContent: 'center',
-    backgroundColor: 'white',
-    marginBottom: 10,
-    width: '100%',
-    borderRadius: 5
   },
 
   listContainer: {

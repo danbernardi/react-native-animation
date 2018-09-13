@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { SafeAreaView, View, Text, Dimensions } from 'react-native';
-import Home from './screens/Home';
 import { Font } from 'expo';
 import { createDrawerNavigator } from 'react-navigation';
 import SpringExample from './screens/SpringExample';

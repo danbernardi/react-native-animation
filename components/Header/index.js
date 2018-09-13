@@ -12,7 +12,6 @@ class Header extends Component {
   }
 
   toggleNav () {
-    console.log(this.props.navigation);
     this.props.navigation.toggleDrawer();
   }
 

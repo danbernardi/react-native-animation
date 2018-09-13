@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { ScrollView, View, Text, PanResponder, Animated, Dimensions, Easing } from 'react-native';
-import { number, string, func } from 'prop-types';
+import { View, Animated, Dimensions } from 'react-native';
+import { number } from 'prop-types';
 import { range } from 'lodash';
 import FontAwesome, { Icons } from 'react-native-fontawesome';
+import Item from './Item';
 import styles from './styles';
 
 class Page extends Component {
@@ -12,11 +13,18 @@ class Page extends Component {
     this.items = range(20);
     this.windowHeight = Dimensions.get('window').height;
     this.scrollProgress = new Animated.Value(0);
+
+    this.state = {
+      scrollEnabled: true,
+      scrolling: false
+    };
   }
 
   render () {
-    const { index, color, windowWidth } = this.props;
+    const { index, windowWidth } = this.props;
+    const { scrollEnabled, scrolling } = this.state;
 
+    // Map scroll state to opacity state
     const opacityProgress = this.scrollProgress.interpolate({
       inputRange: [100, 500],
       outputRange: [1, 0]
@@ -37,14 +45,17 @@ class Page extends Component {
     };
 
     return (
-      <View style={ [styles.container, { backgroundColor: color, width: windowWidth }] }>
+      <View style={ [styles.container, { width: windowWidth }] }>
         <Animated.ScrollView
           ref={ el => { this.scrollView = el; } }
+          scrollEnabled={ scrollEnabled }
           style={ styles.scrollContainer }
+          onScrollBeginDrag={ () => this.setState({ scrolling: true }) }
+          onMomentumScrollEnd={ () => this.setState({ scrolling: false }) }
+          scrollEventThrottle={ 16 }
           onScroll={ Animated.event([
             { nativeEvent: { contentOffset: { y: this.scrollProgress } } }
-          ]) }
-          scrollEventThrottle={ 16 }
+          ], { useNativeDriver: true }) }
         >
           <View style={ {
             alignItems: 'center',
@@ -73,9 +84,14 @@ class Page extends Component {
             </Animated.View>
 
             { this.items.map((item, index) => (
-              <View key={ index } style={ styles.item }>
-                <Text>{ `Item ${index + 1}` }</Text>
-              </View>
+              <Item
+                key={ index }
+                title={ `Item-${item}` }
+                enableScroll={ () => this.setState({ scrollEnabled: true }) }
+                disableScroll={ () => this.setState({ scrollEnabled: false }) }
+                scrollEnabled={ scrollEnabled }
+                scrolling={ scrolling }
+              />
             )) }
           </Animated.View>
         </Animated.ScrollView>
@@ -86,10 +102,7 @@ class Page extends Component {
 
 Page.propTypes = {
   index: number,
-  color: string,
-  windowWidth: number,
-  disableScroll: func,
-  enableScroll: func
+  windowWidth: number
 };
 
 export default Page;
