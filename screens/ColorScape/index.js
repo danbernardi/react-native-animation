@@ -1,6 +1,6 @@
 import React from 'react';
 import { object } from 'prop-types';
-import { TouchableHighlight, Animated } from 'react-native';
+import { View, TouchableHighlight, Animated, Text } from 'react-native';
 import AppWrapper from '../../containers/AppWrapper';
 
 const colors = [
@@ -8,9 +8,7 @@ const colors = [
   '#0DA6F3',
   '#F8B724',
   '#EE05BA',
-  '#000000',
   '#3AD283',
-  '#11005E',
   '#FF005D',
   '#FF765C'
 ];
@@ -29,7 +27,7 @@ class ColorScape extends React.Component {
   }
 
   triggerSwipe({ nativeEvent }) {
-    const coordinates = { x: nativeEvent.locationX, y: nativeEvent.locationY };
+    const coordinates = { x: nativeEvent.pageX, y: nativeEvent.pageY };
     const self = this;
     if (!this.state.animating) {
       this.setState({
@@ -39,7 +37,7 @@ class ColorScape extends React.Component {
       }, () => {
         Animated.timing(
           self.state.scale,
-          { toValue: 20, duration: 500 },
+          { toValue: 20, duration: 600 },
         ).start(() => {
           this.setState({
             scale: new Animated.Value(0),
@@ -64,7 +62,7 @@ class ColorScape extends React.Component {
       position: 'absolute',
       zIndex: 1,
       left: x - diameter / 2,
-      top: y - diameter / 2,
+      top: y - diameter * 1.25,
       transform: [
         { scale }
       ]
@@ -79,7 +77,7 @@ class ColorScape extends React.Component {
             width: '100%',
             height: '100%',
             zIndex: 1,
-            position: 'relative',
+            position: 'absolute',
             backgroundColor: color(colorIndex)
           } }
           onPress={ (event) => this.triggerSwipe(event) }
@@ -88,6 +86,10 @@ class ColorScape extends React.Component {
             style={ circleStyles }
           />
         </TouchableHighlight>
+
+        <View pointerEvents="none" style={ { zIndex: 5, flex: 1, alignItems: 'center', justifyContent: 'center' } }>
+          <Text style={ { color: 'rgba(0, 0, 0, 0.4)', fontSize: 20, fontWeight: 'bold' } }>Tap on the screen</Text>
+        </View>
       </AppWrapper>
     );
   }
