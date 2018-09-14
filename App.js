@@ -1,15 +1,22 @@
 import React, { Component } from 'react';
 import { SafeAreaView, View, Text, Dimensions } from 'react-native';
-import Home from './screens/Home';
 import { Font } from 'expo';
 import { createDrawerNavigator } from 'react-navigation';
 import SpringExample from './screens/SpringExample';
 import ElasticBall from './screens/ElasticBall';
 import ListItems from './screens/ListItems';
 import ColorScape from './screens/ColorScape';
+import Swipeable from './screens/SwipeableExample';
 import Header from './components/Header';
 
 const routes = {
+  Swipeable: {
+    screen: Swipeable,
+    initialRouteParams: { title: 'Swipeable Example' },
+    navigationOptions: () => ({
+      title: 'Swipeable Example'
+    })
+  },
   ListItems: {
     screen: ListItems,
     navigationOptions: () => ({
@@ -37,8 +44,11 @@ const routes = {
 };
 
 const Router = createDrawerNavigator(routes, {
-  initialRouteName: 'ListItems',
-  headerMode: 'none'
+  initialRouteName: 'Swipeable',
+  headerMode: 'none',
+  drawerPosition: 'right',
+  useNativeAnimations: false,
+  drawerLockMode: 'locked-closed'
 });
 
 class App extends Component {
@@ -46,15 +56,6 @@ class App extends Component {
     super(props);
 
     this.windowWidth = Dimensions.get('window').width;
-
-    this.routes = [
-      // Block3d,
-      ColorScape,
-      ListItems,
-      Home,
-      SpringExample,
-      ElasticBall
-    ];
 
     this.state = {
       loading: true,
