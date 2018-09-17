@@ -6,6 +6,7 @@ export default StyleSheet.create({
     alignItems: 'flex-end',
     justifyContent: 'center',
     zIndex: 20,
+    backgroundColor: 'transparent',
     ...pageMargins
   },
 
