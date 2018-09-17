@@ -1,6 +1,6 @@
 import React from 'react';
 import { object } from 'prop-types';
-import { View, TouchableHighlight, Animated, Text } from 'react-native';
+import { View, TouchableHighlight, Animated, Text, Dimensions } from 'react-native';
 import AppWrapper from '../../containers/AppWrapper';
 
 const colors = [
@@ -24,6 +24,8 @@ class ColorScape extends React.Component {
       scale: new Animated.Value(0),
       animating: false
     };
+
+    this.windowHeight = Dimensions.get('window').height;
   }
 
   triggerSwipe({ nativeEvent }) {
@@ -32,7 +34,7 @@ class ColorScape extends React.Component {
     if (!this.state.animating) {
       this.setState({
         x: coordinates.x,
-        y: coordinates.y,
+        y: coordinates.y + (this.windowHeight / 2.5),
         animating: true
       }, () => {
         Animated.timing(
@@ -62,7 +64,7 @@ class ColorScape extends React.Component {
       position: 'absolute',
       zIndex: 1,
       left: x - diameter / 2,
-      top: y - diameter * 1.25,
+      top: y - diameter / 1.25,
       transform: [
         { scale }
       ]
@@ -75,9 +77,10 @@ class ColorScape extends React.Component {
           style={ {
             flex: 1,
             width: '100%',
-            height: '100%',
+            height: this.windowHeight * 2,
             zIndex: 1,
             position: 'absolute',
+            top: -this.windowHeight / 2,
             backgroundColor: color(colorIndex)
           } }
           onPress={ (event) => this.triggerSwipe(event) }

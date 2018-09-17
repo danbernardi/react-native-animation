@@ -5,7 +5,7 @@ export default StyleSheet.create({
   footer: {
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: '#EEEEEE',
+    backgroundColor: 'transparent',
     flexDirection: 'row',
     zIndex: 3,
     ...pageMargins

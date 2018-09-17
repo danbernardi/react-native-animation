@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { SafeAreaView, View, Text, Dimensions } from 'react-native';
 import { Font } from 'expo';
-import { createDrawerNavigator } from 'react-navigation';
+import { createDrawerNavigator, NavigationEvents } from 'react-navigation';
 import SpringExample from './screens/SpringExample';
 import ElasticBall from './screens/ElasticBall';
 import ListItems from './screens/ListItems';
@@ -20,7 +20,7 @@ const routes = {
   ListItems: {
     screen: ListItems,
     navigationOptions: () => ({
-      title: 'Sortable List UI'
+      title: 'Sortable List UI Example'
     })
   },
   SpringExample: {
@@ -45,7 +45,7 @@ const routes = {
 
 const Router = createDrawerNavigator(routes, {
   initialRouteName: 'Swipeable',
-  headerMode: 'none',
+  // headerMode: 'none',
   drawerPosition: 'right',
   useNativeAnimations: false,
   drawerLockMode: 'locked-closed'
@@ -61,6 +61,13 @@ class App extends Component {
       loading: true,
       navigation: null
     };
+  }
+
+  componentDidUpdate (prevProps, prevState) {
+    const { navigation } = this.state;
+    if (navigation && !prevState.nagivation) {
+      navigation.addListener('didFocus', payload => console.log(payload));
+    }
   }
 
   async componentDidMount() {
@@ -82,11 +89,12 @@ class App extends Component {
           justifyContent: 'center'
         } }><Text>Loading...</Text>
         </View>
-        : <SafeAreaView style={ { flex: 1, backgroundColor: '#FFFFFF' } }>
+        : <SafeAreaView style={ { flex: 1 } }>
           <Header navigation={ navigation } />
           <Router
             ref={ navRef => (navRef && !navigation) && this.setState({ navigation: navRef._navigation }) }
             routes={ routes }
+            style={ { zIndex: 1 } }
           />
         </SafeAreaView>
     );
