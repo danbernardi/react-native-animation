@@ -7,6 +7,7 @@ import ElasticBall from './screens/ElasticBall';
 import ListItems from './screens/ListItems';
 import ColorScape from './screens/ColorScape';
 import Swipeable from './screens/SwipeableExample';
+import LottieAnimationExample from './screens/LottieAnimationExample';
 import Header from './components/Header';
 import { Provider } from 'react-redux';
 import store from './store';
@@ -17,7 +18,8 @@ const routes = {};
   { screen: ListItems, title: 'Sortable List UI Example' },
   { screen: SpringExample, title: 'Stagger / Spring example' },
   { screen: ElasticBall, title: 'Elastic ball / Event example' },
-  { screen: ColorScape, title: 'Color swipe example' }
+  { screen: ColorScape, title: 'Color swipe example' },
+  { screen: LottieAnimationExample, title: 'Lottie animation example' }
 ].forEach((route) => {
   routes[route.screen.displayName] = {
     screen: route.screen,
