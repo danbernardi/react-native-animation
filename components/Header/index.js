@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import FontAwesome, { Icons } from 'react-native-fontawesome';
-import { View, TouchableHighlight } from 'react-native';
+import { Text, View, TouchableHighlight } from 'react-native';
 import { object } from 'prop-types';
 import styles from './styles';
+import { connect } from 'react-redux';
 
 class Header extends Component {
   constructor (props) {
@@ -16,8 +17,15 @@ class Header extends Component {
   }
 
   render () {
+    const { navigation, navigationState, routes } = this.props;
+    const currentRoute = routes[navigationState.getIn(['current', 'key'])];
+
     return (
       <View style={ styles.header }>
+        { navigation && <Text style={ styles.headerTitle }>
+          { currentRoute ? currentRoute.initialRouteParams.title : '' }
+        </Text> }
+
         <TouchableHighlight underlayColor={ 'transparent' } onPress={ this.toggleNav }>
           <FontAwesome style={ styles.menu }>{ Icons.bars }</FontAwesome>
         </TouchableHighlight>
@@ -27,7 +35,13 @@ class Header extends Component {
 }
 
 Header.propTypes = {
-  navigation: object
+  navigation: object,
+  navigationState: object,
+  routes: object
 };
 
-export default Header;
+const mapStateToProps = state => ({
+  navigationState: state.navigationState
+});
+
+export default connect(mapStateToProps)(Header);
