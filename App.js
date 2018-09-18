@@ -17,7 +17,7 @@ const routes = {};
   { screen: ListItems, title: 'Sortable List UI Example' },
   { screen: SpringExample, title: 'Stagger / Spring example' },
   { screen: ElasticBall, title: 'Elastic ball / Event example' },
-  { screen: ColorScape, title: 'Color manipulation example' }
+  { screen: ColorScape, title: 'Color swipe example' }
 ].forEach((route) => {
   routes[route.screen.displayName] = {
     screen: route.screen,
