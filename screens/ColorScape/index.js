@@ -5,11 +5,11 @@ import AppWrapper from '../../containers/AppWrapper';
 
 const colors = [
   '#FFFFFF',
-  '#0DA6F3',
   '#F8B724',
   '#EE05BA',
   '#3AD283',
   '#FF005D',
+  '#0DA6F3',
   '#FF765C'
 ];
 
@@ -42,8 +42,7 @@ class ColorScape extends React.Component {
           { toValue: 20, duration: 600 },
         ).start(() => {
           this.setState({
-            scale: new Animated.Value(0),
-            opacity: 0,
+            scale: new Animated.Value(0.01), // See Notes.md for reasoning
             colorIndex: this.state.colorIndex + 1,
             animating: false
           });
