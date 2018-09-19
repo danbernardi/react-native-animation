@@ -8,6 +8,7 @@ import ListItems from './screens/ListItems';
 import ColorScape from './screens/ColorScape';
 import Swipeable from './screens/SwipeableExample';
 import LottieAnimationExample from './screens/LottieAnimationExample';
+import Block3d from './screens/Block3d';
 import Header from './components/Header';
 import { Provider } from 'react-redux';
 import store from './store';
@@ -19,9 +20,10 @@ const routes = {};
   { screen: SpringExample, title: 'Stagger / Spring example' },
   { screen: ElasticBall, title: 'Elastic ball / Event example' },
   { screen: ColorScape, title: 'Color swipe example' },
-  { screen: LottieAnimationExample, title: 'Lottie animation example' }
+  { screen: LottieAnimationExample, title: 'Lottie animation example' },
+  { screen: Block3d, title: '3D Block example' }
 ].forEach((route) => {
-  routes[route.screen.displayName] = {
+  routes[route.screen.name] = {
     screen: route.screen,
     initialRouteParams: { title: route.title },
     navigationOptions: () => ({ title: route.title })
@@ -29,7 +31,7 @@ const routes = {};
 });
 
 const Router = createDrawerNavigator(routes, {
-  initialRouteName: 'Swipeable',
+  // initialRouteName: 'Block3d',
   drawerPosition: 'right',
   useNativeAnimations: false,
   drawerLockMode: 'locked-closed'

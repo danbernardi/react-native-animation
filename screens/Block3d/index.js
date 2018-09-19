@@ -1,132 +1,59 @@
 import React, { Component } from 'react';
-import { number, object } from 'prop-types';
-import {
-  View, Animated, Text
-} from 'react-native';
-import styles from './styles';
+import { object } from 'prop-types';
+import { View } from 'react-native';
 import AppWrapper from '../../containers/AppWrapper';
+import { GLView } from 'expo';
+import * as THREE from 'three';
+import ExpoTHREE from 'expo-three';
 
 class Block3d extends Component {
-  constructor(props) {
-    super(props);
+  async _onGLContextCreate (gl) {
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(
+      75, gl.drawingBufferWidth / gl.drawingBufferHeight, 0.1, 1000
+    );
+    const renderer = new ExpoTHREE.Renderer({ gl });
+    renderer.setSize(gl.drawingBufferWidth, gl.drawingBufferHeight);
 
-    this.state = {
-      rotate: new Animated.ValueXY({ x: 0, y: 0 })
+    const directionalLight1 = new THREE.DirectionalLight(0xffffff, 1);
+    directionalLight1.position.set(0, 20, 10);
+
+    const directionalLight2 = new THREE.DirectionalLight(0xffffff, 1);
+    directionalLight2.position.set(0, -20, 10);
+
+    // const ambientLight = new THREE.ambientLight(0xffffff, 0.5);
+
+    const geometry = new THREE.BoxGeometry(0.6, 0.6, 0.6);
+    const material = new THREE.MeshPhongMaterial({ color: 0x006E90 });
+
+    const cube = new THREE.Mesh(geometry, material);
+    camera.position.z = 2;
+    scene.add(cube);
+    scene.add(directionalLight1);
+    scene.add(directionalLight2);
+
+    const render = () => {
+      requestAnimationFrame(render); // eslint-disable-line no-undef
+      cube.rotation.x += 0.005;
+      cube.rotation.y += 0.005;
+      renderer.render(scene, camera);
+      gl.endFrameEXP();
     };
-
-    this.handlePanResponderMove = this.handlePanResponderMove.bind(this);
+    render();
   }
-
-  // ComponentWillMount () {
-  //   this._panResponder = PanResponder.create({
-  //     onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
-  //     onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
-
-  //     onPanResponderGrant: (e, gestureState) => {
-  //       clearTimeout(this.timeout);
-  //       this.props.disableScroll();
-
-  //       Animated.spring(
-  //         this.state.rotateX,
-  //         { toValue: 45, friction: 3, tension: 50 }
-  //       ).start();
-  //     },
-
-  //     // onPanResponderMove: this.handlePanResponderMove,
-
-  //     onPanResponderRelease: (e, gestureState) => {
-  //       // this.state.rotate.flattenOffset();
-  //       // Animated.spring(
-  //       //   this.state.rotate,
-  //       //   {
-  //       //     toValue: { x: 0, y: 0 },
-  //       //     friction: 3,
-  //       //     restDisplacementThreshold: 1
-  //       //   }
-  //       // ).start();
-
-  //       this.timeout = setTimeout(() => {
-  //         this.props.enableScroll();
-  //       }, 1000);
-  //     }
-  //   })
-  // }
-
-  componentDidMount() {
-    const self = this;
-
-    function animationLoop(self) {
-      Animated.sequence([
-        Animated.timing(this.state.rotate, {
-          toValue: { x: 360, y: 360 },
-          duration: 5000
-        }),
-        Animated.timing(this.state.rotate, {
-          toValue: { x: 0, y: 0 },
-          duration: 5000
-        })
-      ]).start((event) => {
-        if (event.finished) animationLoop(self);
-      });
-    }
-
-    animationLoop(self);
-
-    // Animated.timing(
-    //   this.state.rotate,
-    //   {
-    //     toValue: { x: 360, y: 360 },
-    //     duration: 10000
-    //   }
-    // ).start();
-  }
-
-  // handlePanResponderMove(e, gestureState) {
-  //   const { dx, dy } = gestureState;
-  //   const y = `${dx}deg`;
-  //   const x = `${dy}deg`;
-  // }
 
   render() {
-    const { rotate } = this.state;
-    // console.log(rotate.x._value);
-    // console.log(rotate.y._value);
-
-    const transformStyle = {
-      transform: [
-        { perspective: 1000 },
-        {
-          rotateX: rotate.x.interpolate({
-            inputRange: [-360, 360],
-            outputRange: ['-360deg', '360deg']
-          })
-        },
-        {
-          rotateX: rotate.y.interpolate({
-            inputRange: [-360, 360],
-            outputRange: ['-360deg', '360deg']
-          })
-        }
-      ]
-    };
+    const { navigation } = this.props;
 
     return (
-      <AppWrapper navigation={ this.props.navigation }>
-        <View style={ {
-          flex: 1,
-          backgroundColor: '#fafafa',
-          width: this.props.windowWidth,
-          alignItems: 'center',
-          justifyContent: 'center' } }
+      <AppWrapper navigation={ navigation }>
+        <View
+          style={ { flex: 1, backgroundColor: '#B9D7E0' } }
         >
-          <Animated.View style={ transformStyle }>
-            <View style={ styles.blockSide1 }><Text style={ { color: '#FFFFFF' } }>Side1</Text></View>
-            <View style={ styles.blockSide2 }><Text style={ { color: '#FFFFFF' } }>Side2</Text></View>
-            <View style={ styles.blockTop }><Text style={ { color: '#FFFFFF' } }>Top</Text></View>
-            <View style={ styles.blockBottom }><Text style={ { color: '#FFFFFF' } }>Bottom</Text></View>
-            <View style={ styles.blockBack }><Text style={ { color: '#FFFFFF' } }>Back</Text></View>
-            <View style={ styles.blockFront }><Text style={ { color: '#FFFFFF' } }>Front</Text></View>
-          </Animated.View>
+          <GLView
+            style={ { flex: 1, width: '100%' } }
+            onContextCreate={ this._onGLContextCreate }
+          />
         </View>
       </AppWrapper>
     );
@@ -134,7 +61,6 @@ class Block3d extends Component {
 }
 
 Block3d.propTypes = {
-  windowWidth: number,
   navigation: object
 };
 
