@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableHighlight } from 'react-native';
+import { View } from 'react-native';
 import AppWrapper from '../../containers/AppWrapper';
 import LottieView from 'lottie-react-native';
 
