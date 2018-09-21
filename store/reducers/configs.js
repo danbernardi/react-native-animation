@@ -1,10 +1,18 @@
 import { fromJS } from 'immutable';
 
-const init = fromJS({
+const springInit = {
+  stiffness: 120,
+  damping: 17,
+  velocity: 1000,
+  boxCount: 30
+};
+
+export const init = fromJS({
   'Elastic ball / Event example': {
     friction: 3,
     expandSize: 1.1
-  }
+  },
+  'Stagger / Spring example': springInit
 });
 
 const configs = (state = init, action = {}) => {

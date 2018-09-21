@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { View, Text, Animated, TouchableHighlight, Dimensions } from 'react-native';
 import styles from './styles';
 import AppWrapper from '../../containers/AppWrapper';
@@ -8,7 +9,15 @@ class SpringExample extends Component {
   constructor(props) {
     super(props);
 
-    this.boxCount = 30;
+    this.setup(props);
+  }
+
+  componentWillReceiveProps(newProps) {
+    this.setup(newProps);
+  }
+
+  setup(props) {
+    this.boxCount = props.boxCount;
     this.boxes = {};
 
     let i;
@@ -16,20 +25,24 @@ class SpringExample extends Component {
       this.boxes[`box${i}Position`] = new Animated.Value(Dimensions.get('window').height * -1);
     }
 
-    this.state = { ...this.boxes };
+    if (this.state) {
+      this.setState({ ...this.boxes });
+    } else {
+      this.state = { ...this.boxes };
+    }
 
     this.triggerAnimation = this.triggerAnimation.bind(this);
 
     this.inSpringConfig = {
-      stiffness: 120,
-      damping: 17,
-      velocity: 1000,
+      stiffness: props.stiffness,
+      damping: props.damping,
+      velocity: props.velocity,
       useNativeDriver: true
     };
 
     this.outSpringConfig = {
-      stiffness: 150,
-      damping: 16,
+      stiffness: props.stiffness * (5 / 4),
+      damping: props.damping - 1,
       useNativeDriver: true
     };
   }
@@ -76,7 +89,17 @@ class SpringExample extends Component {
 
 SpringExample.propTypes = {
   windowWidth: number,
-  navigation: object
+  navigation: object,
+  stiffness: number,
+  damping: number,
+  velocity: number,
+  boxCount: number
 };
 
-export default SpringExample;
+const mapStateToProps = state => ['stiffness', 'damping', 'velocity', 'boxCount']
+  .reduce((obj, key) => ({
+    ...obj,
+    [key]: state.configs.getIn(['Stagger / Spring example', key])
+  }), {});
+
+export default connect(mapStateToProps)(SpringExample);

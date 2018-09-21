@@ -4,10 +4,44 @@ import { View, Text, TouchableHighlight } from 'react-native';
 import { CheckBox, Slider } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { string, func, object } from 'prop-types';
+import { startCase } from 'lodash'
 
 import { setModal, setConfig } from '../../store/actions';
 import { colors as colorScapeColors } from '../../screens/ColorScape';
+import { init } from '../../store/reducers/configs';
 import styles from './styles';
+
+const sliderDefaults = (configs, dispatch, section, name) => {
+  const initValue = init.getIn([section, name]);
+  const steps = [10000, 1000, 100, 50, 10, 5, 3, 2, 1, 0.2, 0.1, 0.01];
+  const stepIndex = steps.findIndex(step => initValue % step === 0);
+  const step = steps[stepIndex];
+
+  return {
+    step,
+    minimumValue: 0,
+    maximumValue: steps.reverse().find(s => s > initValue * 2),
+    value: configs.getIn([section, name]),
+    onValueChange: val => dispatch(setConfig(section, name, val))
+  };
+};
+
+const slidersForSection = (section, configs, dispatch) => {
+  return (<View style={ { padding: 20 } }>
+    {
+      Object.keys(init.get(section).toJS()).map((key, ind) => {
+        const defaults = sliderDefaults(configs, dispatch, section, key);
+        return (<View key={ ind }>
+          <Text style={ { fontSize: 18, color: 'white' } }>{ startCase(key) }</Text>
+          <Slider
+            { ...defaults }
+          />
+          <Text style={ { fontSize: 14, color: 'white', marginBottom: 10 } }>Value: { defaults.value }</Text>
+        </View>);
+      })
+    }
+  </View>);
+};
 
 export const modalContent = {
   'Color swipe example': (configs, dispatch) => colorScapeColors.map((color, index) => {
@@ -25,26 +59,10 @@ export const modalContent = {
       />
     );
   }),
-  'Elastic ball / Event example': (configs, dispatch) => (
-    <View style={ { padding: 20 } }>
-      <Text style={ { fontSize: 18, color: 'white' } }>Friction</Text>
-      <Slider
-        value={ configs.getIn(['Elastic ball / Event example', 'friction']) }
-        step={ 0.2 }
-        minimumValue={ 0 }
-        maximumValue={ 10 }
-        onValueChange={ (value) => dispatch(setConfig('Elastic ball / Event example', 'friction', value)) }
-      />
-      <Text style={ { fontSize: 18, color: 'white' } }>Expanded Size</Text>
-      <Slider
-        value={ configs.getIn(['Elastic ball / Event example', 'expandSize']) }
-        step={ 0.1 }
-        minimumValue={ 0.5 }
-        maximumValue={ 3 }
-        onValueChange={ (value) => dispatch(setConfig('Elastic ball / Event example', 'expandSize', value)) }
-      />
-    </View>
-  )
+  'Elastic ball / Event example': (configs, dispatch) =>
+    slidersForSection('Elastic ball / Event example', configs, dispatch),
+  'Stagger / Spring example': (configs, dispatch) =>
+    slidersForSection('Stagger / Spring example', configs, dispatch)
 };
 
 const getContent = (modal, configs, dispatch) => (modalContent[modal](configs, dispatch) || null);
