@@ -23,6 +23,11 @@ class AppWrapper extends Component {
           animationType="slide"
           transparent={ false }
           visible={ !!modal }
+          onRequestClose={
+            () => {
+              dispatch(setModal(null));
+            }
+          }
         >
           <ConfigModal page={ modal } />
         </Modal>
