@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
   View, Text, PanResponder, Animated
 } from 'react-native';
 import styles from './styles';
 import AppWrapper from '../../containers/AppWrapper';
-import { object } from 'prop-types';
+import { object, number } from 'prop-types';
 
 class ElasticBall extends Component {
   constructor (props) {
@@ -17,6 +18,15 @@ class ElasticBall extends Component {
   }
 
   componentWillMount() {
+    this.setPanResponder(this.props);
+  }
+
+  componentWillReceiveProps(newProps) {
+    this.setPanResponder(newProps);
+  }
+
+  setPanResponder(props) {
+    const { friction, expandSize } = props;
     this._panResponder = PanResponder.create({
       onStartShouldSetPanResponderCapture: (/* evt, gestureState */) => true,
       onMoveShouldSetPanResponderCapture: (/* evt, gestureState */) => true,
@@ -29,7 +39,7 @@ class ElasticBall extends Component {
 
         Animated.spring(
           this.state.scale,
-          { toValue: 1.1, friction: 3 },
+          { toValue: expandSize, friction },
         ).start();
       },
 
@@ -39,14 +49,25 @@ class ElasticBall extends Component {
 
       onPanResponderRelease: (/* e, gestureState */) => {
         this.state.pan.flattenOffset();
-        Animated.spring(
-          this.state.pan,
-          {
-            toValue: { x: 0, y: 0 },
-            friction: 3,
-            restDisplacementThreshold: 1
-          },
-        ).start();
+        Animated.parallel([
+          Animated.spring(
+            this.state.pan,
+            {
+              toValue: { x: 0, y: 0 },
+              friction,
+              restDisplacementThreshold: 1
+            },
+          ),
+
+          Animated.spring(
+            this.state.scale,
+            {
+              toValue: 1,
+              friction,
+              restDisplacementThreshold: 1
+            }
+          )
+        ]).start();
 
         this.timeout = setTimeout(() => {
           if (this.props.enableScroll instanceof Function) this.props.enableScroll();
@@ -87,7 +108,14 @@ class ElasticBall extends Component {
 }
 
 ElasticBall.propTypes = {
-  navigation: object
+  navigation: object,
+  friction: number,
+  expandSize: number
 };
 
-export default ElasticBall;
+const mapStateToProps = state => ({
+  friction: state.configs.getIn(['Elastic ball / Event example', 'friction']),
+  expandSize: state.configs.getIn(['Elastic ball / Event example', 'expandSize'])
+});
+
+export default connect(mapStateToProps)(ElasticBall);
