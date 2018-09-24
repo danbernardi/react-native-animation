@@ -15,15 +15,15 @@ import store from './store';
 
 const routes = {};
 [
-  { screen: Swipeable, title: 'Swipeable Example' },
-  { screen: ListItems, title: 'Sortable List UI Example' },
-  { screen: SpringExample, title: 'Stagger / Spring example' },
-  { screen: ElasticBall, title: 'Elastic ball / Event example' },
-  { screen: ColorScape, title: 'Color swipe example' },
-  { screen: LottieAnimationExample, title: 'Lottie animation example' },
-  { screen: Block3d, title: '3D Block example' }
+  { screen: Swipeable, name: 'Swipeable', title: 'Swipeable Example' },
+  { screen: ListItems, name: 'ListItems', title: 'Sortable List UI Example' },
+  { screen: SpringExample, name: 'SpringExample', title: 'Stagger / Spring example' },
+  { screen: ElasticBall, name: 'ElasticBall', title: 'Elastic ball example' },
+  { screen: ColorScape, name: 'Colorscape', title: 'Color swipe example' },
+  { screen: LottieAnimationExample, name: 'LottieAnimationExample', title: 'Lottie animation example' },
+  { screen: Block3d, name: 'Block3d', title: '3D Block example' }
 ].forEach((route) => {
-  routes[route.screen.name] = {
+  routes[route.name] = {
     screen: route.screen,
     initialRouteParams: { title: route.title },
     navigationOptions: () => ({ title: route.title })

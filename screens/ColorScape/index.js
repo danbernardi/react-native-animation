@@ -1,9 +1,10 @@
 import React from 'react';
-import { object } from 'prop-types';
+import { object, array } from 'prop-types';
+import { connect } from 'react-redux';
 import { View, TouchableHighlight, Animated, Text, Dimensions } from 'react-native';
 import AppWrapper from '../../containers/AppWrapper';
 
-const colors = [
+export const colors = [
   '#FFFFFF',
   '#F8B724',
   '#EE05BA',
@@ -12,8 +13,6 @@ const colors = [
   '#0DA6F3',
   '#FF765C'
 ];
-
-const color = index => colors[index % colors.length];
 
 class ColorScape extends React.Component {
   constructor(props) {
@@ -52,7 +51,10 @@ class ColorScape extends React.Component {
   }
 
   render() {
+    const { chosenColors } = this.props;
     const { colorIndex, scale, x, y } = this.state;
+
+    const color = index => chosenColors[index % chosenColors.length];
 
     const diameter = 100;
     const circleStyles = {
@@ -98,7 +100,12 @@ class ColorScape extends React.Component {
 }
 
 ColorScape.propTypes = {
-  navigation: object
+  navigation: object,
+  chosenColors: array
 };
 
-export default ColorScape;
+const mapStateToProps = state => ({
+  chosenColors: colors.filter(col => state.configs.getIn(['Color swipe example', col]) !== false)
+});
+
+export default connect(mapStateToProps)(ColorScape);

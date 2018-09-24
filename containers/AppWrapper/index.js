@@ -1,17 +1,37 @@
 import React, { Component } from 'react';
-import Footer from '../../components/Footer';
-import { View } from 'react-native';
-import { node, func } from 'prop-types';
+import { Modal, View } from 'react-native';
+import { string, node, func } from 'prop-types';
 import { NavigationEvents } from 'react-navigation';
 import { connect } from 'react-redux';
+
+import ConfigModal from '../../components/ConfigModal';
+import Footer from '../../components/Footer';
+import { setModal } from '../../store/actions';
 import { updateNavigationState } from '../../store/actions';
 
 class AppWrapper extends Component {
+  componentWillUnmount () {
+    this.props.dispatch(setModal(null));
+  }
+
   render () {
-    const { children, dispatch } = this.props;
+    const { children, dispatch, modal } = this.props;
 
     return (
       <View style={ { flex: 1 } }>
+        <Modal
+          animationType="slide"
+          transparent={ false }
+          visible={ !!modal }
+          onRequestClose={
+            () => {
+              dispatch(setModal(null));
+            }
+          }
+        >
+          <ConfigModal page={ modal } />
+        </Modal>
+
         <NavigationEvents
           onWillFocus={ payload => dispatch(updateNavigationState(payload)) }
         />
@@ -24,7 +44,8 @@ class AppWrapper extends Component {
 
 AppWrapper.propTypes = {
   children: node,
-  dispatch: func
+  dispatch: func,
+  modal: string
 };
 
-export default connect()(AppWrapper);
+export default connect(state => ({ modal: state.modal }))(AppWrapper);
