@@ -16,6 +16,7 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
     flexDirection: 'row',
     zIndex: 20,
+    textAlign: 'center',
     backgroundColor: 'transparent',
     ...pageMargins
   },

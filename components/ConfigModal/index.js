@@ -1,10 +1,10 @@
 import React from 'react';
 import FontAwesome, { Icons } from 'react-native-fontawesome';
-import { View, Text, TouchableHighlight } from 'react-native';
+import { SafeAreaView, View, Text, TouchableHighlight } from 'react-native';
 import { CheckBox, Slider } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { string, func, object } from 'prop-types';
-import { startCase } from 'lodash'
+import { startCase } from 'lodash';
 
 import { setModal, setConfig } from '../../store/actions';
 import { colors as colorScapeColors } from '../../screens/ColorScape';
@@ -71,21 +71,20 @@ const ConfigModal = ({ modal, dispatch, configs }) => {
   const content = getContent(modal, configs, dispatch);
 
   return (
-    <View style={ styles.modal }>
+    <SafeAreaView style={ styles.modal }>
       <TouchableHighlight
         style={ styles.close }
         onPress={ () => { dispatch(setModal(null)); } }>
         <FontAwesome style={ styles.closeIcon }>{ Icons.close }</FontAwesome>
       </TouchableHighlight>
-      {
-        content
-          ? <View style={ styles.content }>
-            <Text style={ styles.title }>{ modal } Config</Text>
-            { content }
-          </View>
-          : null
+
+      { content &&
+        <View style={ styles.content }>
+          <Text style={ styles.title }>{ modal } Config</Text>
+          { content }
+        </View>
       }
-    </View>
+    </SafeAreaView>
   );
 };
 
