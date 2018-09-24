@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableHighlight } from 'react-native';
+import { View } from 'react-native';
 import AppWrapper from '../../containers/AppWrapper';
 import LottieView from 'lottie-react-native';
 
@@ -8,28 +8,19 @@ class LottieAnimationExample extends Component {
     super(props);
   }
 
+  componentDidMount () {
+    this.animation.play();
+  }
+
   render() {
     return (
       <AppWrapper>
-        <View style={ { flex: 1, backgroundColor: '#05D962', alignItems: 'center' } }>
+        <View style={ { flex: 1, backgroundColor: 'salmon', alignItems: 'center' } }>
           <LottieView
             ref={ el => { this.animation = el; } }
-            source={ require('./body_movin.json') }
+            source={ require('./animation-w360-h360.json') }
             style={ { flex: 1 } }
           />
-
-          <TouchableHighlight
-            underlayColor="rgba(255, 255, 255, 0.9)"
-            style={ {
-              marginTop: 40,
-              paddingTop: 10,
-              paddingBottom: 10,
-              paddingLeft: 20,
-              paddingRight: 20,
-              backgroundColor: 'white'
-            } } onPress={ () => this.animation.play() }>
-            <Text style={ { color: '#05D962', fontWeight: 'bold' } }>Start animation</Text>
-          </TouchableHighlight>
         </View>
       </AppWrapper>
     );
