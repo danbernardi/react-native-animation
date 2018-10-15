@@ -4,7 +4,13 @@
     "icon": "./assets/icon.png",
     "version": "1.0.0",
     "slug": "redshift-animation-playground",
-    "sdkVersion": "27.0.0"
+    "sdkVersion": "27.0.0",
+    "orientation": "portrait",
+    "entryPoint": "./App.js",
+    "splash": {
+      "backgroundColor": "#FFFFFF",
+      "image": "./assets/icon.png"
+    }
   },
   "ios": {
     "bundleIdentifier": "com.redshiftdigital.redshiftanimationplayground"
