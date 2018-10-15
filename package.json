@@ -1,6 +1,6 @@
 {
-  "name": "react-native-animation",
-  "version": "0.1.0",
+  "name": "redshift-animation-playground",
+  "version": "1.0.0",
   "private": true,
   "devDependencies": {
     "eslint": "^5.5.0",
