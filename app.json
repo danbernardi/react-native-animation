@@ -3,7 +3,7 @@
     "sdkVersion": "27.0.0",
     "name": "Redshift Animation Playground",
     "icon": "./assets/icon.png",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "slug": "redshift-animation-playground",
     "orientation": "portrait",
     "splash": {
@@ -11,7 +11,8 @@
       "image": "./assets/splash.png"
     },
     "android": {
-      "package": "com.redshiftdigital.redshiftanimationplayground"
+      "package": "com.redshiftdigital.redshiftanimationplayground",
+      "permissions": []
     },
     "ios": {
       "bundleIdentifier": "com.redshiftdigital.redshiftanimationplayground"
