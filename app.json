@@ -13,7 +13,7 @@
     "android": {
       "package": "com.redshiftdigital.redshiftanimationplayground",
       "permissions": [],
-      "versionCode": 2
+      "versionCode": 3
     },
     "ios": {
       "bundleIdentifier": "com.redshiftdigital.redshiftanimationplayground"
