@@ -18,6 +18,7 @@
     "ios": {
       "bundleIdentifier": "com.redshiftdigital.redshiftanimationplayground",
       "icon": "./assets/ios-icon.png",
+      "buildNumber": "1.0.1"
     }
   }
 }
