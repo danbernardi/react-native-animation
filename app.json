@@ -16,7 +16,8 @@
       "versionCode": 3
     },
     "ios": {
-      "bundleIdentifier": "com.redshiftdigital.redshiftanimationplayground"
+      "bundleIdentifier": "com.redshiftdigital.redshiftanimationplayground",
+      "icon": "./assets/ios-icon.png",
     }
   }
 }
